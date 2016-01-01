@@ -27,8 +27,8 @@ int gpioExport(int pin)
     if (isValidGPIOPin(pin) == false)
         return EXIT_FAILURE;
 
-	char buffer[3];
-	int bytes = snprintf(buffer, 3, "%d", pin);
+    char buffer[3];
+    int bytes = snprintf(buffer, 3, "%d", pin);
 
     char *gpioSysFile = gpioSystemFile(GPIO_EXPORT);
 
@@ -46,8 +46,8 @@ int gpioDirection(int pin, int direction)
     if (isValidGPIOPin(pin) == false || isValidGPIODirection(direction) == false)
         return EXIT_FAILURE;
 
-	char buffer[4];
-	int bytes = snprintf(buffer, 4, "%s", DIRECTION_INSTRUCTION[direction]);
+    char buffer[4];
+    int bytes = snprintf(buffer, 4, "%s", DIRECTION_INSTRUCTION[direction]);
 
     char *gpioSysFile = gpioSystemPinFile(pin, GPIO_DIRECTION);
 
@@ -82,8 +82,8 @@ int gpioWrite(int pin, int value)
     if (isValidGPIOPin(pin) == false || isValidGPIOValue(value) == false)
         return EXIT_FAILURE;
 
-	char buffer[2];
-	int bytes = snprintf(buffer, 2, "%d", value);
+    char buffer[2];
+    int bytes = snprintf(buffer, 2, "%d", value);
 
     char *gpioSysFile = gpioSystemPinFile(pin, GPIO_VALUE);
 
@@ -100,8 +100,8 @@ int gpioUnexport(int pin)
     if (isValidGPIOPin(pin) == false)
         return EXIT_FAILURE;
 
-	char buffer[3];
-	int bytes = snprintf(buffer, 3, "%d", pin);
+    char buffer[3];
+    int bytes = snprintf(buffer, 3, "%d", pin);
 
     char *gpioSysFile = gpioSystemFile(GPIO_UNEXPORT);
 
@@ -124,8 +124,8 @@ char* gpioSystemFile(const char *systemFile)
  */
 char* gpioSystemPinFile(int pin, const char *systemFile)
 {
-	char systemDir[8];
-	snprintf(systemDir, 8, GPIO_PIN_DIR, pin);
+    char systemDir[8];
+    snprintf(systemDir, 8, GPIO_PIN_DIR, pin);
 
     char *gpioFile = malloc(sizeof(char) * (strlen(GPIO_SYS_CLASS) + strlen(systemDir) + strlen(systemFile) + 1));
     strcat(gpioFile, GPIO_SYS_CLASS);
@@ -144,21 +144,21 @@ int gpioSystemFileWrite(char *gpioSystemFile, int bytes, char *buffer)
         printf("Writing '%s' to %s\n", buffer, gpioSystemFile);
     }
 
-	int fileDescriptor = open(gpioSystemFile, O_WRONLY);
+    int fileDescriptor = open(gpioSystemFile, O_WRONLY);
     if (fileDescriptor == -1)
     {
         printf("Error opening system file %s\n", gpioSystemFile);
         return EXIT_FAILURE;
     }
 
-	if (write(fileDescriptor, buffer, bytes) == -1)
-	{
+    if (write(fileDescriptor, buffer, bytes) == -1)
+    {
         printf("Error writing system file %s\n", gpioSystemFile);
         close(fileDescriptor);
         return EXIT_FAILURE;
-	};
+    };
 
-	close(fileDescriptor);
+    close(fileDescriptor);
 
     return EXIT_SUCCESS;
 }
