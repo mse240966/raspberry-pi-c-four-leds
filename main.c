@@ -3,7 +3,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "GPIO/gpio.h"
+#include "gpio/gpio.h"
 #include "binary.h"
 
 static int initialiseGPIO();
